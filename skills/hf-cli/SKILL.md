@@ -1,5 +1,5 @@
 ---
-name: huggingface-cli
+name: hf-cli
 description: "Hugging Face Hub CLI (`hf`) for downloading, uploading, and managing repositories, models, datasets, and Spaces on the Hugging Face Hub. Replaces now deprecated `huggingface-cli` command."
 ---
 
