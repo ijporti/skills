@@ -1,32 +1,44 @@
 # Unit 2 Starter — Claude Code
 
-## What's here
+## What's Here
 
-```
+```text
+app.py                     # minimal Gradio scaffold with mock inference
+requirements.txt           # dependencies for the Space exercise
 skills/
-  hf-brand/SKILL.md      — HuggingFace visual identity for Gradio
-  brutalist/SKILL.md     — alternate aesthetic (monochrome, hard edges)
-  no-fluff/SKILL.md      — strips disclaimers and filler
-app_scaffold.py          — minimal Gradio shell with mock inference
+  hf-brand/SKILL.md        # Hugging Face visual identity for Gradio
+  brutalist/SKILL.md       # alternate aesthetic (monochrome, hard edges)
+  no-fluff/SKILL.md        # strips disclaimers and filler
+agent/
+  app.py                   # skill-aware mini chat app with a TODO selector
+  skill_loader.py          # parse, load, and compose helpers
+  solution_select_skills.py
+  skills/
+    hf-brand/SKILL.md
+    domain-qwen/SKILL.md
 ```
 
-## Setup
+## Space Workflow
 
-Copy the skills you want into your project's `.claude/skills/`:
+Copy the skill you want into `.claude/skills/` inside a working copy of this starter:
 
 ```bash
 mkdir -p .claude/skills
 cp -r skills/hf-brand .claude/skills/
 ```
 
-Or into `~/.claude/skills/` to use them everywhere.
+Then open Claude Code and ask it to turn `app.py` into a polished Gradio demo.
 
-## Gradio 6 notes
+## Under-the-Hood Workflow
 
-Things Claude sometimes gets wrong with Gradio 6.x:
+The `agent/` directory is a separate exercise for the "Inside the Box" chapter. It lets you inspect a minimal load, select, compose loop directly:
 
-1. **`theme` and `css` go on `Blocks()`**, not `launch()`. `gr.Blocks(theme=theme, css=css)` is correct; passing them to `launch()` raises a TypeError.
-2. **Fonts need `gr.themes.GoogleFont("Name")`**, not bare strings. `font=["Source Sans Pro"]` will crash; `font=[gr.themes.GoogleFont("Source Sans Pro")]` works.
-3. **Nested quotes in placeholders** — if Claude writes `placeholder="e.g. "hello""`, that's a syntax error. Use single quotes outside or escape.
+```bash
+cd agent
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python app.py
+```
 
-The `hf-brand` skill already encodes #1 and #2.
+`app.py` in that directory ships with a `select_skills()` TODO. Compare your answer with `solution_select_skills.py` when you are done.

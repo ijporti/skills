@@ -4,32 +4,36 @@ You fine-tuned a model in Unit 1. Time to give it a demo people can actually cli
 
 ## The Setup
 
-Clone the starter and install the brand skill:
+Use the starter that ships with this unit:
 
 ```bash
-git clone https://github.com/huggingface/skills-course-unit2-starter
-cd skills-course-unit2-starter
+cp -R course/units/en/unit2/starter ~/unit2-starter
+cd ~/unit2-starter
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+mkdir -p .claude/skills
 cp -r skills/hf-brand .claude/skills/
 ```
 
 > [!NOTE]
-> If you didn't complete the Unit 1 fine-tune (it requires HF Pro), that's fine — the scaffold has a mock `predict()` function. You can swap in your real model later, or use any Hub model.
+> If you did not complete the Unit 1 fine-tune, that is fine. The starter's `app.py` uses a mock `predict()` function so you can still do the whole exercise.
 
 ## What the Brand Skill Does
 
-Open `.claude/skills/hf-brand/SKILL.md`. It's about 60 lines encoding Hugging Face's visual identity:
+Open `.claude/skills/hf-brand/SKILL.md`. It encodes a specific look and tone for Gradio apps:
 
 - Primary yellow `#FFD21E`, orange `#FF9D00` hover
 - The 🤗 emoji as the brand mark
 - Source Sans Pro font, soft rounded corners
 - Warm, welcoming copy — "Try it out!" not "ENTER TEXT"
-- The Gradio 6 theme config, pre-written
+- A ready-to-use Gradio theme block
 
-It's a **brand guideline in skill form**. Claude reads it and builds accordingly.
+It is a brand guideline in skill form.
 
 ## Build It
 
-Open Claude Code in the starter directory:
+Open Claude Code in `~/unit2-starter`:
 
 ```bash
 claude
@@ -37,13 +41,13 @@ claude
 
 Ask:
 
-```
-Build a Gradio demo for the sentiment classifier in app_scaffold.py.
-Keep the mock predict() function — just build a proper UI around it.
-Three example inputs. Make it ready to deploy as a Space.
+```text
+Turn `app.py` into a Space-ready Gradio demo for the sentiment classifier.
+Keep the mock `predict()` function. Add three example inputs and a polished
+layout, but do not change the underlying prediction logic yet.
 ```
 
-You didn't say "use the HF brand skill." Claude matched the request ("Gradio", "Space") to the skill's description and loaded it.
+You never said "use the hf-brand skill." Claude should infer that from the request.
 
 ## What You'll See
 
@@ -60,14 +64,13 @@ Same prompt, same model, no brand skill:
 
 ![Baseline demo](./assets/baseline.png)
 
-It works. It's fine. It also looks like every other Gradio app on the Hub — generic blue, random emoji, default theme.
+It works, but it has no strong point of view. That is the value of a well-targeted skill: the code path stays the same while the design and copy get steered in a consistent direction.
 
 </details>
 
 ## Run It
 
 ```bash
-pip install gradio
 python app.py
 ```
 
@@ -75,19 +78,19 @@ Open `http://localhost:7860`. Click around.
 
 ## Try a Different Aesthetic
 
-The starter also includes `skills/brutalist/` — monochrome, monospace, hard edges, ALL CAPS labels. Swap it in:
+The starter also includes `skills/brutalist/`. Swap it in:
 
 ```bash
-rm -r .claude/skills/hf-brand
+rm -rf .claude/skills/hf-brand
 cp -r skills/brutalist .claude/skills/
 ```
 
-`/reload-plugins` in Claude Code, then ask for a rebuild. Same app, different personality:
+Then ask Claude to restyle `app.py` again. Same app, different personality:
 
 ![Brutalist demo](./assets/brutalist.png)
 
 `SENTIMENT CLASSIFIER` in heavy black caps. `PASTE A REVIEW. RECEIVE A VERDICT.` Zero rounded corners.
 
-Same 60-odd lines of skill. Completely different output.
+Same scaffold. Different skill. Different outcome.
 
-Next: what to do when it's *almost* right.
+Next: what to do when it's almost right.

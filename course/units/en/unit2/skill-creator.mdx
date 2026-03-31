@@ -1,0 +1,85 @@
+# The `skill-creator` Skill
+
+You improved one description by hand. That works once. `skill-creator` turns that into a repeatable loop.
+
+## Install by Copying the Skill Directory
+
+For this course, the least fragile path is to copy the skill directly:
+
+```bash
+git clone https://github.com/anthropics/skills ~/anthropic-skills
+mkdir -p ~/.claude/skills
+cp -R ~/anthropic-skills/skills/skill-creator ~/.claude/skills/
+```
+
+Open Claude Code and run:
+
+```text
+/skills
+```
+
+You should see `skill-creator` in the list.
+
+## What It Gives You
+
+`skill-creator` is not just one markdown file. It is a small toolkit:
+
+```text
+skill-creator/
+├── SKILL.md
+├── scripts/
+├── eval-viewer/
+├── agents/
+└── references/
+```
+
+That is progressive disclosure again:
+
+- `SKILL.md` defines the workflow Claude follows
+- `scripts/` runs repeatable evaluation and packaging steps
+- `eval-viewer/` turns results into something you can review quickly
+- `agents/` and `references/` hold supporting material Claude only needs at specific moments
+
+## Run One Description-Tuning Loop
+
+Open Claude Code in the same workspace where you tested `dataset-publisher`, then say:
+
+```text
+Use skill-creator to improve the description for `dataset-publisher`.
+Generate trigger and near-miss eval prompts, run one optimization loop,
+and show me the before/after description you would keep.
+```
+
+For this course, stop after one loop. You are not trying to squeeze out the last two percent. You are trying to see the workflow once, cleanly.
+
+## What to Look For
+
+The useful output is not the tool running in the background. It is the change in the description.
+
+Before:
+
+```yaml
+description: Create, populate, and publish datasets on the Hugging Face Hub
+```
+
+After:
+
+```yaml
+description: Create and publish datasets to the Hugging Face Hub. Use when
+  the user wants to share structured data, upload examples for training,
+  create a dataset card, or publish Q&A pairs for a team.
+```
+
+That is the entire point of the exercise. The rewritten version names the situations where Claude should grab the skill, not just the noun phrase a catalog reader would see.
+
+## Why This Matters
+
+`skill-creator` is most useful when a skill already works once it is loaded, but does not trigger often enough. That was exactly the problem with `dataset-publisher`.
+
+By this point in the unit, you have seen all three layers:
+
+1. Write a skill
+2. Notice it does not activate reliably
+3. Tighten the activation signal with a lightweight evaluation loop
+
+Now finish the app and publish it.

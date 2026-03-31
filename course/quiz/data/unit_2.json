@@ -1,0 +1,82 @@
+[
+  {
+    "question": "Where should a project-local skill live if you want it versioned with the repository?",
+    "answer_a": "~/.claude/skills/<name>/SKILL.md",
+    "answer_b": ".claude/skills/<name>/SKILL.md",
+    "answer_c": "skills/<name>/README.md",
+    "answer_d": ".mcp/<name>/SKILL.md",
+    "correct_answer": "B"
+  },
+  {
+    "question": "What is the main auto-activation signal Claude uses when deciding whether to load a skill?",
+    "answer_a": "The skill directory name",
+    "answer_b": "The longest heading inside SKILL.md",
+    "answer_c": "The description field in frontmatter",
+    "answer_d": "The file modification time",
+    "correct_answer": "C"
+  },
+  {
+    "question": "Why did the original dataset-publisher skill fail to fire on the Q&A-sharing prompt?",
+    "answer_a": "The skill body was too short",
+    "answer_b": "The helper files were missing",
+    "answer_c": "The description defined the skill but did not describe natural trigger situations",
+    "answer_d": "Claude Code only loads plugin skills automatically",
+    "correct_answer": "C"
+  },
+  {
+    "question": "In the minimal starter from Inside the Box, what does load_skills(...) do?",
+    "answer_a": "Calls the language model to rank skills",
+    "answer_b": "Parses SKILL.md files into structured Skill objects",
+    "answer_c": "Uploads skill files to the Hub",
+    "answer_d": "Executes the selected skills immediately",
+    "correct_answer": "B"
+  },
+  {
+    "question": "In that same starter, what is select_skills(...) responsible for?",
+    "answer_a": "Building the Gradio UI",
+    "answer_b": "Choosing which skill names are relevant to the current user message",
+    "answer_c": "Writing new skill files",
+    "answer_d": "Packaging plugin metadata",
+    "correct_answer": "B"
+  },
+  {
+    "question": "Why is system_prompt_for(...) a separate step from select_skills(...)?",
+    "answer_a": "Selection reads short descriptions, while composition injects the full chosen skill bodies",
+    "answer_b": "Claude Code requires two Python modules for every skill",
+    "answer_c": "The Hub rejects combined prompts",
+    "answer_d": "Skills cannot be loaded and composed in the same turn",
+    "correct_answer": "A"
+  },
+  {
+    "question": "What problem does the no-fluff skill fix in the Space exercise?",
+    "answer_a": "Incorrect Python imports",
+    "answer_b": "Missing authentication for the Hub",
+    "answer_c": "Repeated disclaimer and filler text in demo code and UI",
+    "answer_d": "Broken dataset card generation",
+    "correct_answer": "C"
+  },
+  {
+    "question": "What is the most useful job for skill-creator in this unit?",
+    "answer_a": "Replacing Gradio with Streamlit",
+    "answer_b": "Optimizing a skill description so it triggers on realistic requests",
+    "answer_c": "Creating MCP servers automatically",
+    "answer_d": "Publishing a Space without the Hub CLI",
+    "correct_answer": "B"
+  },
+  {
+    "question": "Which current command creates a Gradio Space repo on the Hub?",
+    "answer_a": "huggingface-cli repo create your-demo --type space --space_sdk gradio",
+    "answer_b": "hf repos create your-demo --repo-type space --space-sdk gradio",
+    "answer_c": "hf spaces create your-demo --sdk gradio",
+    "answer_d": "hf upload your-demo . . --space-sdk gradio",
+    "correct_answer": "B"
+  },
+  {
+    "question": "Why are small project-local skills often better than one giant catch-all skill?",
+    "answer_a": "Claude Code ignores large skills entirely",
+    "answer_b": "Small skills are easier to trigger, debug, and keep behavior-specific",
+    "answer_c": "The Agent Skills specification forbids multi-section skills",
+    "answer_d": "Only project-local skills can contain scripts",
+    "correct_answer": "B"
+  }
+]

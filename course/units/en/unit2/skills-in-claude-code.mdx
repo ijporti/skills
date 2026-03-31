@@ -1,86 +1,84 @@
 # Skills in Claude Code
 
-Unit 1 showed you `/plugin install` and moved on. Here's what's actually happening.
+Unit 1 showed you how to install a skill. This section is about what Claude Code does with it after that.
 
-## Three Ways to Install a Skill
+## Where Skills Live
 
-### Manual (start here)
+Claude Code can discover the same skill at a few different scopes.
 
-Drop a directory into Claude Code's skills folder. That's it.
+### Personal
 
 ```bash
 mkdir -p ~/.claude/skills/my-skill
-# put your SKILL.md in there
+# put SKILL.md in this directory
 ```
 
-Next time you run `claude`, the skill is available. The `name` in your frontmatter becomes a slash command — if your SKILL.md says `name: dataset-publisher`, you now have `/dataset-publisher`.
-
-This is the simplest path, and it's what you'll use most while learning.
+Use this when you want the skill in every project you open.
 
 ### Project-local
-
-Same thing, but in your repo instead of your home directory:
 
 ```bash
 mkdir -p .claude/skills/my-skill
 ```
 
-These skills are versioned with your code. Anyone who clones the repo and opens Claude Code gets them. Good for team conventions — "this is how we write tests here."
+Use this when the skill belongs to one repository or one team workflow. These files can live in Git alongside the code they shape.
 
-### Plugin marketplace
-
-For skills someone else maintains and distributes:
+### Plugin
 
 ```bash
 /plugin marketplace add huggingface/skills
-/plugin install hugging-face-model-trainer@huggingface/skills
+/plugin install gradio@huggingface/skills
 ```
 
-Plugin skills are namespaced — they show up as `/huggingface:model-trainer`, not `/model-trainer`. This avoids collisions when you have many installed.
-
-> [!NOTE]
-> Unit 1 started with plugins because it was demonstrating HF's published skills. For your own skills, the manual path is simpler. You can always package them as a plugin later — that's Unit 3.
+Use this when someone else maintains the skill and ships it as part of a plugin. Plugin skills are namespaced as `/plugin-name:skill-name`. For this repository, the plugin name is `huggingface-skills`, so a plugin-installed skill gets a namespaced command instead of a bare `/skill-name`.
 
 ## How Activation Works
 
-When you open Claude Code, it reads every installed skill's `description` field. Not the whole SKILL.md — just the description. Those descriptions sit in context.
+For automatic activation, the most important line in a skill is the `description` field in its frontmatter. Claude uses that text to decide whether a skill is relevant enough to load.
 
-When you ask something, Claude matches your request against those descriptions and loads the relevant skills' full content. That's progressive disclosure — the thing Unit 1 described conceptually.
-
-**The description is the entire selection mechanism.** Not one input. The only input.
-
-This means the difference between a skill that activates reliably and one that never fires is usually a single line of frontmatter:
+That makes the difference between these two versions meaningful:
 
 ```yaml
 # Won't activate — too vague
 description: A helper for datasets
 
-# Will activate — says when
+# Better — says when to use it
 description: Create and publish datasets to the HF Hub. Use when the user mentions
-  publishing a dataset, uploading data to the Hub, or writing a dataset card.
+  publishing a dataset, uploading training data, sharing structured Q&A pairs,
+  or writing a dataset card.
 ```
 
-You'll debug exactly this in the next section.
+The description is not the only frontmatter field Claude understands, but it is the main auto-activation signal. Other fields can narrow or change behavior:
+
+- `disable-model-invocation: true` stops automatic activation and keeps the skill manual-only
+- `user-invocable: false` hides it from the slash-command menu
+- `paths:` limits activation to matching files or folders
+
+That means a good description should do two jobs at once:
+
+1. Say what the skill does
+2. Say when to use it in the language a user would actually type
 
 ## Slash Commands vs Auto-Activation
 
-Two ways a skill gets used:
+Skills can enter the conversation in two ways:
 
-- **Auto:** You ask about datasets. Claude matches the description. Loads the skill. You never said its name.
-- **Explicit:** You type `/dataset-publisher`. The skill loads no matter what. Useful when auto-matching misses, or when you want to force a specific workflow.
+- **Automatic:** Claude matches your request to the skill description and loads it
+- **Explicit:** You type `/skill-name` or `/plugin-name:skill-name` and force that skill into the turn
 
-Most of the time you want auto. Slash commands are the fallback.
+Automatic activation is what you want for background knowledge and recurring patterns. Explicit invocation is the fallback when you want a specific workflow right now.
 
-## Seeing What Loaded
+## Checking What Is Available
 
-There's no `--verbose` flag that shows which skills fired. Instead:
+Two commands are useful here:
 
-- `/context` shows what's in the context window, including skill content
-- Just ask: *"Which skills did you load for that last response?"* — Claude will tell you
-- If the skill has a distinctive workflow ("Step 1: Initialize the repository..."), you'll see it in the response
+- `/skills` shows the skills Claude Code can currently see
+- `/reload-plugins` applies plugin installs, enables, or disables without restarting Claude Code
 
-## Skills vs MCP — One Paragraph
+For file-based project skills, the simplest approach is still the simplest one: save the file, then continue working or start a fresh session if you want to remove any doubt about what Claude has loaded.
 
-You'll see both mentioned in Claude Code docs and it's easy to confuse them. **Skills are instructions** — markdown that goes into context and tells Claude *how* to do something. **MCP servers are tools** — external programs that give Claude new *capabilities*, like "query this database" or "post to Slack." A skill might say "here's how to use our internal deploy tool." An MCP server *is* the deploy tool. Skills need a `.md` file. MCP needs a server process and `.mcp.json` config.
+## Skills vs MCP
+
+Skills are instructions. MCP servers are tools. A skill teaches Claude how to do something with the tools it already has; an MCP server gives Claude a new capability, like talking to Slack or querying a database. You will often use them together, but they solve different problems.
 
 Now let's use your Unit 1 skill and see if it actually works.

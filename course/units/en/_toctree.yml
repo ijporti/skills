@@ -29,7 +29,7 @@
   - local: unit1/conclusion
     title: Conclusion
 
-- title: "2. Using Skills with Coding Agents"
+- title: "2. Using Skills with Claude Code"
   sections:
   - local: unit2/introduction
     title: Using Skills with Claude Code
@@ -39,20 +39,18 @@
     title: "Hands-on: Did Your Skill Fire?"
   - local: unit2/inside-the-box
     title: "Inside the Box: Load, Select, Compose"
-  - local: unit2/the-real-sdk
-    title: The Real SDK
   - local: unit2/hands-on-build-space
     title: "Hands-on: Build the Space"
   - local: unit2/hands-on-iterate
     title: "Hands-on: Fix It Mid-Session"
-  - local: unit2/skill-creator-install
-    title: "The skill-creator Skill: Install and Tour"
-  - local: unit2/skill-creator-loop
-    title: "The skill-creator Loop"
-  - local: unit2/hands-on-optimize-description
-    title: "Hands-on: Optimize the Description"
-  - local: unit2/publish-and-conclusion
-    title: Publish and Conclusion
+  - local: unit2/skill-creator
+    title: "The skill-creator Skill"
+  - local: unit2/hands-on-publish-space
+    title: "Hands-on: Publish the Space"
+  - local: unit2/quiz
+    title: Quiz
+  - local: unit2/conclusion
+    title: Conclusion
 
 - title: "3. Sharing Skills"
   sections:

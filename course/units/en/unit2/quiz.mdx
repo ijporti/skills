@@ -1,0 +1,83 @@
+# Quiz: Using Skills with Claude Code
+
+Test your understanding of the ideas and workflows from Unit 2. Passing this quiz is part of the **Claude Code Specialization** track described in Unit 0.
+
+The same questions are stored in `course/quiz/data/unit_2.json`.
+
+## Questions
+
+1. Where should a project-local skill live if you want it versioned with the repository?
+   A. `~/.claude/skills/<name>/SKILL.md`
+   B. `.claude/skills/<name>/SKILL.md`
+   C. `skills/<name>/README.md`
+   D. `.mcp/<name>/SKILL.md`
+
+2. What is the main auto-activation signal Claude uses when deciding whether to load a skill?
+   A. The skill directory name
+   B. The longest heading inside `SKILL.md`
+   C. The `description` field in frontmatter
+   D. The file modification time
+
+3. Why did the original `dataset-publisher` skill fail to fire on the Q&A-sharing prompt?
+   A. The skill body was too short
+   B. The helper files were missing
+   C. The description defined the skill but did not describe natural trigger situations
+   D. Claude Code only loads plugin skills automatically
+
+4. In the minimal starter from `inside-the-box`, what does `load_skills(...)` do?
+   A. Calls the language model to rank skills
+   B. Parses `SKILL.md` files into structured `Skill` objects
+   C. Uploads skill files to the Hub
+   D. Executes the selected skills immediately
+
+5. In that same starter, what is `select_skills(...)` responsible for?
+   A. Building the Gradio UI
+   B. Choosing which skill names are relevant to the current user message
+   C. Writing new skill files
+   D. Packaging plugin metadata
+
+6. Why is `system_prompt_for(...)` a separate step from `select_skills(...)`?
+   A. Selection reads short descriptions, while composition injects the full chosen skill bodies
+   B. Claude Code requires two Python modules for every skill
+   C. The Hub rejects combined prompts
+   D. Skills cannot be loaded and composed in the same turn
+
+7. What problem does the `no-fluff` skill fix in the Space exercise?
+   A. Incorrect Python imports
+   B. Missing authentication for the Hub
+   C. Repeated disclaimer and filler text in demo code and UI
+   D. Broken dataset card generation
+
+8. What is the most useful job for `skill-creator` in this unit?
+   A. Replacing Gradio with Streamlit
+   B. Optimizing a skill description so it triggers on realistic requests
+   C. Creating MCP servers automatically
+   D. Publishing a Space without the Hub CLI
+
+9. Which current command creates a Gradio Space repo on the Hub?
+   A. `huggingface-cli repo create your-demo --type space --space_sdk gradio`
+   B. `hf repos create your-demo --repo-type space --space-sdk gradio`
+   C. `hf spaces create your-demo --sdk gradio`
+   D. `hf upload your-demo . . --space-sdk gradio`
+
+10. Why are small project-local skills often better than one giant catch-all skill?
+    A. Claude Code ignores large skills entirely
+    B. Small skills are easier to trigger, debug, and keep behavior-specific
+    C. The Agent Skills specification forbids multi-section skills
+    D. Only project-local skills can contain scripts
+
+<details>
+<summary>Answer key</summary>
+
+1. B
+2. C
+3. C
+4. B
+5. B
+6. A
+7. C
+8. B
+9. B
+10. B
+
+</details>

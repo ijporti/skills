@@ -1,36 +1,45 @@
 # Using Skills with Claude Code
 
-In Unit 1, you wrote a skill. You installed a few more. You ran them.
+In Unit 1, you learned what a skill is and wrote one from scratch. In this unit, you'll use skills the way they show up in real Claude Code work: debugging why one did not fire, dropping in a better one, writing a tiny fix mid-task, and shipping the final result as a Hugging Face Space.
 
-This unit is about the part that comes after — actually *living* with skills in your daily work. The difference between "I did a course exercise once" and "I reach for skills when Claude keeps getting something wrong" comes down to a few things Unit 1 didn't have time for:
+## Learning Objectives
 
-- Knowing whether your skill actually activated
-- Fixing it when it didn't
-- Writing new ones mid-task, not in advance
+After completing this unit, you will be able to:
 
-You'll do all of that in Claude Code, and you'll ship a Gradio Space at the end.
+- Explain where Claude Code looks for skills and how automatic activation differs from explicit slash-command use
+- Diagnose why a skill did not activate and rewrite its `description` to match natural user intent
+- Relate Claude Code's skill behavior to a minimal load, select, compose implementation
+- Use project-local skills to shape a Gradio app inside an active Claude Code workflow
+- Use `skill-creator` to tighten a skill description with a lightweight evaluation loop
+- Publish a finished Gradio Space with the current `hf` CLI workflow
 
 ## What You'll Build
 
-A demo Space for the model you fine-tuned in Unit 1 — built inside Claude Code, styled by a skill, deployed to the Hub.
+A demo Space for the model you fine-tuned in Unit 1, built inside Claude Code, styled by a skill, tuned with one tiny mid-session fix, and published to the Hub.
 
-Along the way you'll debug a skill that *should* activate but doesn't, write a tiny one mid-conversation to fix an annoyance, and see the difference between a skill you wrote and a skill that works.
+Along the way you'll debug a skill that should activate but does not, inspect a minimal skill selector, and see the difference between a skill that exists and a skill that reliably changes behavior.
 
 ## Prerequisites
 
-- Completion of Unit 1 (you should have a `dataset-publisher` skill you wrote)
-- Claude Code installed — see the box below if you haven't
+- Completion of Unit 1
+- Claude Code installed
 - A Hugging Face account
 
 > [!TIP]
-> **Installing Claude Code:** Follow the [official guide](https://docs.anthropic.com/en/docs/claude-code/getting-started). Install via npm, run `claude` in a project directory, authenticate through console.anthropic.com. Takes about two minutes.
+> If you have not installed Claude Code yet, go back to Unit 0 and follow the setup steps there before starting this unit.
 
 ## Unit Overview
 
-1. **Skills in Claude Code** — Where they live. How they load. What a slash command actually is.
-2. **Hands-on: Did Your Skill Fire?** — Drop your Unit 1 skill in. Ask without naming it. Debug.
-3. **Hands-on: Build the Space** — Gradio demo, styled by a brand skill you install.
-4. **Hands-on: Fix It Mid-Session** — Something's off. Write 10 lines. Reload. Continue.
-5. **Publish** — Push to the Hub.
+This unit is structured as follows:
 
-Let's start with the mechanics.
+1. **Skills in Claude Code** — Where skills live, how auto-activation works, and when slash commands matter
+2. **Hands-on: Did Your Skill Fire?** — Test your Unit 1 skill against a natural prompt and fix its triggering
+3. **Inside the Box** — Walk through a minimal skill loader and selector you can actually run
+4. **Hands-on: Build the Space** — Turn the starter `app.py` into a branded Gradio demo
+5. **Hands-on: Fix It Mid-Session** — Add one tiny project skill to remove recurring UI fluff
+6. **The `skill-creator` Skill** — Run one description-tuning loop and compare before versus after
+7. **Hands-on: Publish the Space** — Create a Space repo and upload the finished app with `hf`
+8. **Quiz** — Check your understanding of Claude Code skill workflows
+9. **Conclusion** — Recap what changed and what comes next
+
+Let's start with how Claude Code actually sees your skills.

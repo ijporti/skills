@@ -8,6 +8,8 @@ Ask Claude Code to fill this out. With the hf-brand skill installed,
 it'll style it to match the Hub.
 """
 
+from __future__ import annotations
+
 import gradio as gr
 
 

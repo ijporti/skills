@@ -1,92 +1,99 @@
 # Hands-on: Did Your Skill Fire?
 
-You built `dataset-publisher` in Unit 1. Let's find out if it works.
+You built `dataset-publisher` in Unit 1. Now test whether Claude Code actually reaches for it on a natural prompt.
 
 ## Step 1: Install It
 
-Copy your skill into Claude Code's skills directory:
+Copy your Unit 1 skill into your personal Claude Code skills directory:
 
 ```bash
 mkdir -p ~/.claude/skills/dataset-publisher
-cp path/to/your/unit1/dataset-publisher/SKILL.md ~/.claude/skills/dataset-publisher/
+cp path/to/your/dataset-publisher/SKILL.md ~/.claude/skills/dataset-publisher/
 ```
 
-If you have the helper script and template from Unit 1, copy those too — they go in the same directory.
+If you kept helper files from Unit 1, copy those too. They belong in the same folder as `SKILL.md`.
 
 ## Step 2: Ask Without Naming It
 
-Open Claude Code in an empty directory:
+Open Claude Code in a clean directory so no project-specific skills interfere:
 
 ```bash
 mkdir ~/skill-test && cd ~/skill-test
 claude
 ```
 
-Now ask something your skill *should* handle — but don't say the skill's name:
+Now ask for something your skill should handle, but do not say the skill name:
 
-```
+```text
 I want to share about 20 Python coding questions and answers with my team
 in a structured way. What's a good approach?
 ```
 
-Watch the response.
+This exact prompt comes from the Unit 2 draft logs.
 
-## Step 3: Diagnose
+## Step 3: Compare the Before and After
 
-Three things can happen.
+Here is the kind of answer you get **before** the description is tuned:
 
-### It activated
+```text
+For 20 Q&A pairs intended as training material, the format depends on how your
+team will consume it:
 
-You'll see Claude follow your skill's workflow — initialize repo, define structure, add data, write card. The response references the specific steps you wrote. **This is success.** Your description was clear enough.
+- If they'll read/reference it -> markdown
+- If it'll feed a tool -> JSONL
+- If non-engineers will edit it -> spreadsheet
+```
 
-### It didn't activate
+That answer is reasonable, but it is generic. There is no Hub workflow, no dataset card, and no sign that `dataset-publisher` activated.
 
-Generic advice. "You could use a CSV file, or a shared doc, or..." No mention of the Hub, no structured workflow.
+After the description is improved, the same prompt turns into this:
 
-The problem is almost always the description. Unit 1 gave you:
+```text
+The dataset-publisher skill is built for exactly this — it'll create a Hugging
+Face dataset with your Q&A pairs plus a proper dataset card so your team can
+load it with datasets.load_dataset().
+```
+
+That is the difference you are looking for. The skill changed the route Claude took.
+
+## Step 4: Fix the Trigger
+
+The usual problem is the frontmatter description. Unit 1 used a definition:
 
 ```yaml
 description: Create, populate, and publish datasets on the Hugging Face Hub
 ```
 
-That's a *definition*, not a *trigger*. It says what the skill does, not when to use it. Claude reads "share Q&A with my team" and doesn't see a match.
+That tells a human what the skill is. It does not tell Claude when to use it.
 
-Rewrite it to include trigger phrases:
+Rewrite it so it includes natural trigger language:
 
 ```yaml
 description: Create and publish datasets to the Hugging Face Hub. Use when
   the user wants to share structured data, publish a dataset, upload examples
-  for training, or create a dataset card. Triggers on "dataset", "publish to
-  Hub", "share training data", "Q&A pairs".
+  for training, create a dataset card, or share Q&A pairs with a team.
 ```
 
-Save the file. In Claude Code, reload:
+Save the file. Then start a fresh Claude Code session and ask the same prompt again.
 
-```
+If you installed the skill through a plugin instead of a plain directory copy, use:
+
+```text
 /reload-plugins
 ```
 
-Ask again. Different response.
-
-### You can't tell
-
-Ask directly:
-
-```
-Which skills did you consider or load for that last response?
-```
-
-Claude will tell you. If `dataset-publisher` isn't mentioned, it didn't fire.
-
-You can also run `/context` to see what's loaded in the context window.
+to make Claude Code pick up the plugin change without restarting.
 
 ## What You Just Learned
 
-The skill you wrote in Unit 1 was *correct* — the format was right, the instructions were good. But it probably didn't activate on a natural question, because the description was written for humans reading a catalog, not for an agent matching intent.
+Your skill from Unit 1 was probably structurally correct. The issue was not the body of the skill. The issue was the first matching signal Claude saw.
 
-This is the single most common reason skills don't work. And now you know how to fix it.
+That is one of the most common reasons skills appear to "not work":
 
-> [!TIP]
-> **A good description has two parts:** what the skill does (one sentence) and when to use it (trigger phrases, situations, keywords). Unit 1 taught the first part. The second part is what makes it fire.
+- the skill exists
+- the instructions are fine
+- the `description` does not match the way users actually ask for help
 
-Next: build something with a skill that's already tuned to activate well.
+A strong description has two parts: what the skill does, and when Claude should reach for it.
+
+Next, you'll look at a minimal selector that makes this behavior visible in code.
