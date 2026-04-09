@@ -1,6 +1,6 @@
 ---
 name: huggingface-llm-trainer
-description: This skill should be used when users want to train or fine-tune language models using TRL (Transformer Reinforcement Learning) on Hugging Face Jobs infrastructure. Covers SFT, DPO, GRPO and reward modeling training methods, plus GGUF conversion for local deployment. Includes guidance on the TRL Jobs package, UV scripts with PEP 723 format, dataset preparation and validation, hardware selection, cost estimation, Trackio monitoring, Hub authentication, and model persistence. Should be invoked for tasks involving cloud GPU training, GGUF conversion, or when users mention training on Hugging Face Jobs without local GPU setup.
+description: Train or fine-tune language and vision models using TRL (Transformer Reinforcement Learning) or Unsloth with Hugging Face Jobs infrastructure. Covers SFT, DPO, GRPO and reward modeling training methods, plus GGUF conversion for local deployment. Includes guidance on the TRL Jobs package, UV scripts with PEP 723 format, dataset preparation and validation, hardware selection, cost estimation, Trackio monitoring, Hub authentication, model selection/leaderboards and model persistence. Use for tasks involving cloud GPU training, GGUF conversion, or when users mention training on Hugging Face Jobs without local GPU setup.
 license: Complete terms in LICENSE.txt
 ---
 
@@ -420,24 +420,25 @@ Before submitting:
 
 **On timeout:** Job killed immediately, all unsaved progress lost, must restart from beginning
 
-## Model Selection
+## Choose a Base Model (Model Selection)
 
-**Offer to identify models to train based on task type or benchmark results.**
+**Identify models to train based on task type or benchmark results.**
 
-Use `scripts/hf_benchmarks.py` to identify top-performing models for specific tasks. Use this to help the user select a model as the base for training, whilst keeping size and hardware constraints in mind.
+Use `scripts/hf_benchmarks.py` to identify top-performing models for specific tasks. This helps the user select a model as the base for training, whilst keeping size and hardware constraints in mind.
 
 ```bash
-
 # Get help on the benchmarks command:
 uv run scripts/hf_benchmarks.py --help
+```
 
+### Example -- choosing an OCR base model
+```bash
 # Search for benchmarks containing whose name contains the text `ocr`
 uv run scripts/hf_benchmarks.py search --query ocr
 
 # Get the ranked leaderboard for the allenai/olmOCR-bench benchmark 
 uv run scripts/hf_benchmarks.py leaderboard allenai/olmOCR-bench
 ```
-
 
 ## Cost Estimation
 
