@@ -420,6 +420,25 @@ Before submitting:
 
 **On timeout:** Job killed immediately, all unsaved progress lost, must restart from beginning
 
+## Model Selection
+
+**Offer to identify models to train based on task type or benchmark results.**
+
+Use `scripts/hf_benchmarks.py` to identify top-performing models for specific tasks. Use this to help the user select a model as the base for training, whilst keeping size and hardware constraints in mind.
+
+```bash
+
+# Get help on the benchmarks command:
+uv run scripts/hf_benchmarks.py --help
+
+# Search for benchmarks containing whose name contains the text `ocr`
+uv run scripts/hf_benchmarks.py search --query ocr
+
+# Get the ranked leaderboard for the allenai/olmOCR-bench benchmark 
+uv run scripts/hf_benchmarks.py leaderboard allenai/olmOCR-bench
+```
+
+
 ## Cost Estimation
 
 **Offer to estimate cost when planning jobs with known parameters.** Use `scripts/estimate_cost.py`:
@@ -690,6 +709,7 @@ Add to PEP 723 header:
 - `scripts/unsloth_sft_example.py` - Unsloth text LLM training template (faster, less VRAM)
 - `scripts/estimate_cost.py` - Estimate time and cost (offer when appropriate)
 - `scripts/convert_to_gguf.py` - Complete GGUF conversion script
+- `scripts/hf_benchmarks.py` - Search for benchmark results and leaderboards by task, alias or free text.
 
 ### External Scripts
 - [Dataset Inspector](https://huggingface.co/datasets/mcp-tools/skills/raw/main/dataset_inspector.py) - Validate dataset format before training (use via `uv run` or `hf_jobs`)
