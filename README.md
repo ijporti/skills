@@ -6,6 +6,8 @@ A fork of [huggingface/skills](https://huggingface.co/skills) — a collection o
 
 This repository contains a curated set of skills that can be used with AI assistants and agents. Skills are modular, reusable components that extend the capabilities of language models.
 
+> **Personal fork note:** I'm using this primarily to experiment with custom tool-use skills for local LLM setups. PRs here are for my own learning — please contribute upstream to [huggingface/skills](https://github.com/huggingface/skills) instead.
+
 ## Structure
 
 ```
