@@ -75,7 +75,9 @@ Leaderboards are automatically updated via GitHub Actions on each push to `main`
 
 ## Security
 
-Please review our [Security Policy](.github/workflows/SECURITY.md) before reporting vulnerabilities.
+> **Note:** The security policy path in the original repo appears to be incorrect — `SECURITY.md` is typically at the repo root or `.github/SECURITY.md`, not inside `workflows/`. Keeping the link as-is for now until confirmed.
+
+Please review our [Security Policy](.github/SECURITY.md) before reporting vulnerabilities.
 
 ## License
 
