@@ -54,6 +54,15 @@ skill_path = hf_hub_download(
 )
 ```
 
+### Using Skills Locally (Personal Setup)
+
+For local LLM experimentation, I find it useful to clone the dataset repo directly:
+
+```bash
+# Clone the skills dataset locally for offline use
+git clone https://huggingface.co/datasets/huggingface/skills skills-local
+```
+
 ## Contributing
 
 1. Fork this repository
