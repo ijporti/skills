@@ -68,9 +68,16 @@ You can also load a skill directly from a local path without hitting the Hub:
 ```python
 import importlib.util
 
-def load_skill_local(skill_path: str):
-    """Load a skill module from a local file path (useful for offline/dev work)."""
-    spec = importlib.util.spec_from_file_location("skill", skill_path)
+def load_skill_local(skill_path: str, reload: bool = False):
+    """Load a skill module from a local file path (useful for offline/dev work).
+    
+    Args:
+        skill_path: Path to the skill .py file.
+        reload: If True, bypass any cached module and re-import from disk.
+                Handy when iterating on a skill without restarting the interpreter.
+    """
+    module_name = f"skill_{skill_path}" if reload else "skill"
+    spec = importlib.util.spec_from_file_location(module_name, skill_path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -95,14 +102,4 @@ def load_skill_local(skill_path: str):
 - **Evals Leaderboard**: Tracks skill performance across standardized benchmarks
 - **Hackers Leaderboard**: Tracks community contributions and skill submissions
 
-Leaderboards are automatically updated via GitHub Actions on each push to `main`.
-
-## Security
-
-> **Note:** The security policy path in the original repo appears to be incorrect — `SECURITY.md` is typically at the repo root or `.github/SECURITY.md`, not inside `workflows/`. Keeping the link as-is for now until confirmed.
-
-Please review our [Security Policy](.github/SECURITY.md) before reporting vulnerabilities.
-
-## License
-
-This project is licensed u
+Leaderboards are automatically updated
