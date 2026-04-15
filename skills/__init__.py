@@ -2,6 +2,9 @@
 
 This package provides utilities to discover, load, and execute skills
 from the Hugging Face Hub or from local directories.
+
+Note: Forked from huggingface/skills for personal learning/experimentation.
+See https://github.com/huggingface/skills for the upstream project.
 """
 
 from skills.core import load_skill, load_skill_local, list_skills
