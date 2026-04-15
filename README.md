@@ -63,6 +63,19 @@ For local LLM experimentation, I find it useful to clone the dataset repo direct
 git clone https://huggingface.co/datasets/huggingface/skills skills-local
 ```
 
+You can also load a skill directly from a local path without hitting the Hub:
+
+```python
+import importlib.util
+
+def load_skill_local(skill_path: str):
+    """Load a skill module from a local file path (useful for offline/dev work)."""
+    spec = importlib.util.spec_from_file_location("skill", skill_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+```
+
 ## Contributing
 
 1. Fork this repository
@@ -92,4 +105,4 @@ Please review our [Security Policy](.github/SECURITY.md) before reporting vulner
 
 ## License
 
-This project is licensed under the Apache 2.0 License — see the [LICENSE](LICENSE) file for details.
+This project is licensed u
