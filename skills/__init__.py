@@ -12,6 +12,8 @@ from skills.types import Skill, SkillMetadata
 
 __version__ = "0.1.0"
 __author__ = "Hugging Face"
+# Upstream author retained; fork maintained by me for personal projects
+__maintainer__ = "personal fork"
 __all__ = [
     "load_skill",
     "load_skill_local",
