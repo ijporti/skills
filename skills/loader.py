@@ -50,6 +50,7 @@ def load_skill(
     filename: str = "skill.py",
     token: Optional[str] = None,
     cache_dir: Optional[Union[str, Path]] = None,
+    repo_type: str = "model",
 ) -> Callable:
     """Load a skill from the Hugging Face Hub.
 
@@ -58,6 +59,8 @@ def load_skill(
         filename: The filename within the repo containing the skill. Defaults to ``"skill.py"``.
         token: Optional Hugging Face API token for private repos.
         cache_dir: Optional directory to cache downloaded skill files.
+        repo_type: The type of Hub repository. Defaults to ``"model"`` (upstream used
+            ``"space"`` but most skill repos are plain model repos).
 
     Returns:
         The skill callable loaded from the Hub.
@@ -83,7 +86,7 @@ def load_skill(
         filename=filename,
         token=token or os.environ.get("HF_TOKEN"),
         cache_dir=cache_dir,
-        repo_type="space",
+        repo_type=repo_type,
     )
 
     return load_skill_local(local_path)
